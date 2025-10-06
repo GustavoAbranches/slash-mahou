@@ -1,0 +1,27 @@
+# Godot 4+ specific ignores
+.godot/
+!.godot/icon.svg
+
+# Godot-specific ignores
+.mono/
+data_*/
+export_presets.cfg
+override.cfg
+
+# General ignores
+*.o
+*.lo
+*.la
+*.pyc
+*.pyo
+*.swp
+*~
+*.orig
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.a
+
+/android/

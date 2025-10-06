@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr1n41xvonqh2"]
+
+[ext_resource type="Texture2D" uid="uid://brdife65awtaj" path="res://assets/backgrounds/background_1.png" id="1_iinn4"]
+[ext_resource type="Texture2D" uid="uid://byg0fp5kuyqaa" path="res://icon.svg" id="2_tpwft"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iinn4"]
+size = Vector2(5068.5, 85.5)
+
+[node name="Stage" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(2532.4998, 542.00006)
+scale = Vector2(4.2175, 1.8033335)
+texture = ExtResource("1_iinn4")
+
+[node name="WordCollider" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WordCollider"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WordCollider/StaticBody2D"]
+position = Vector2(2534, 550)
+shape = SubResource("RectangleShape2D_iinn4")
+
+[node name="WordCollider2" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WordCollider2"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WordCollider2/StaticBody2D"]
+position = Vector2(2518, 1097)
+shape = SubResource("RectangleShape2D_iinn4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2325, 160)
+texture = ExtResource("2_tpwft")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(4827, 154)
+texture = ExtResource("2_tpwft")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(545, 177)
+texture = ExtResource("2_tpwft")

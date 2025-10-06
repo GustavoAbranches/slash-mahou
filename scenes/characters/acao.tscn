@@ -1,0 +1,111 @@
+[gd_scene load_steps=11 format=3 uid="uid://cr3i31aftkdio"]
+
+[ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bsunn"]
+[ext_resource type="Texture2D" uid="uid://7pj14gyaoqhg" path="res://assets/Enemys/Acao_0-sheet.png" id="2_fegrd"]
+[ext_resource type="Script" uid="uid://dr5ahii227gka" path="res://scenes/characters/acao.gd" id="2_jmi3k"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsunn"]
+radius = 160.0
+height = 320.0
+
+[sub_resource type="Animation" id="Animation_jmi3k"]
+resource_name = "Idle"
+length = 0.5
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_6oafe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0nvw3"]
+resource_name = "Walk"
+length = 0.6
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wr6p"]
+_data = {
+&"Idle": SubResource("Animation_jmi3k"),
+&"RESET": SubResource("Animation_6oafe"),
+&"Walk": SubResource("Animation_0nvw3")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fegrd"]
+radius = 64.315735
+height = 1017.2099
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jmi3k"]
+radius = 54.967094
+height = 160.45447
+
+[node name="Acao" instance=ExtResource("1_bsunn")]
+position = Vector2(2, -171)
+script = ExtResource("2_jmi3k")
+speed = 250.0
+
+[node name="ShadowSprite" parent="." index="0"]
+visible = false
+
+[node name="CharacterSprite" parent="." index="1"]
+texture = ExtResource("2_fegrd")
+hframes = 11
+vframes = 2
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(0, 165)
+scale = Vector2(1, 0.5113569)
+shape = SubResource("CapsuleShape2D_bsunn")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_1wr6p")
+}
+autoplay = "Idle"
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+position = Vector2(152, -3.9999962)
+scale = Vector2(1.430443, 0.33424762)
+shape = SubResource("CapsuleShape2D_fegrd")
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0"]
+position = Vector2(3.0517578e-05, 177)
+scale = Vector2(3.0745666, -0.8351278)
+shape = SubResource("CapsuleShape2D_jmi3k")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
