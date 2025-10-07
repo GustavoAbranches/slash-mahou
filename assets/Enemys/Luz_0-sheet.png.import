@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e72mnkc4wqtl"
-path="res://.godot/imported/Lux_0-sheet.png-0282b108c8ba1ec5108fff2e21493f64.ctex"
+uid="uid://c6frs0atomrrd"
+path="res://.godot/imported/Luz_0-sheet.png-7f8583ba39582c9d5d004df69a70b7d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Enemys/Lux_0-sheet.png"
-dest_files=["res://.godot/imported/Lux_0-sheet.png-0282b108c8ba1ec5108fff2e21493f64.ctex"]
+source_file="res://assets/Enemys/Luz_0-sheet.png"
+dest_files=["res://.godot/imported/Luz_0-sheet.png-7f8583ba39582c9d5d004df69a70b7d4.ctex"]
 
 [params]
 

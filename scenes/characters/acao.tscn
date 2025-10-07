@@ -10,7 +10,7 @@ height = 320.0
 
 [sub_resource type="Animation" id="Animation_jmi3k"]
 resource_name = "Idle"
-length = 0.5
+length = 0.4
 loop_mode = 1
 step = 0.083333336
 tracks/0/type = "value"
@@ -20,7 +20,7 @@ tracks/0/path = NodePath("CharacterSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
@@ -74,17 +74,20 @@ radius = 54.967094
 height = 160.45447
 
 [node name="Acao" instance=ExtResource("1_bsunn")]
-position = Vector2(2, -171)
+collision_layer = 4
+collision_mask = 12
 script = ExtResource("2_jmi3k")
+health = 50
+damage = 20
 speed = 250.0
 
 [node name="ShadowSprite" parent="." index="0"]
 visible = false
 
 [node name="CharacterSprite" parent="." index="1"]
+visible = false
 texture = ExtResource("2_fegrd")
-hframes = 11
-vframes = 2
+hframes = 12
 
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(0, 165)
@@ -97,10 +100,16 @@ libraries = {
 }
 autoplay = "Idle"
 
+[node name="DamageEmitter" parent="." index="4"]
+collision_mask = 16
+
 [node name="CollisionShape2D" parent="DamageEmitter" index="0"]
 position = Vector2(152, -3.9999962)
 scale = Vector2(1.430443, 0.33424762)
 shape = SubResource("CapsuleShape2D_fegrd")
+
+[node name="DamageReceiver" parent="." index="5"]
+collision_layer = 32
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
 position = Vector2(3.0517578e-05, 177)

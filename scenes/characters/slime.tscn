@@ -83,6 +83,7 @@ position = Vector2(-64, 103)
 scale = Vector2(7.0625005, 2.6874998)
 
 [node name="CharacterSprite" parent="." index="1"]
+visible = false
 position = Vector2(-1, -131)
 scale = Vector2(0.258, 0.22377358)
 skew = 0.017453292

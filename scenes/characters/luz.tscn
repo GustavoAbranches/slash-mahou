@@ -1,0 +1,131 @@
+[gd_scene load_steps=12 format=3 uid="uid://clbt88t8qpsy2"]
+
+[ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_ai5c1"]
+[ext_resource type="Script" uid="uid://lknne1t7sgwd" path="res://luz.gd" id="2_bawnb"]
+[ext_resource type="Texture2D" uid="uid://c6frs0atomrrd" path="res://assets/Enemys/Luz_0-sheet.png" id="3_jy04m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ai5c1"]
+radius = 118.34272
+
+[sub_resource type="Animation" id="Animation_hpfks"]
+resource_name = "Idle"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_oj7lm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_akh08"]
+resource_name = "Walk"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_ai5c1"]
+resource_name = "Attack"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j05jv"]
+_data = {
+&"Attack": SubResource("Animation_ai5c1"),
+&"Idle": SubResource("Animation_hpfks"),
+&"RESET": SubResource("Animation_oj7lm"),
+&"Walk": SubResource("Animation_akh08")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bawnb"]
+radius = 117.06836
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jy04m"]
+radius = 120.004166
+
+[node name="Luz" instance=ExtResource("1_ai5c1")]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("2_bawnb")
+health = 300
+damage = 5
+
+[node name="ShadowSprite" parent="." index="0"]
+visible = false
+
+[node name="CharacterSprite" parent="." index="1"]
+visible = false
+texture = ExtResource("3_jy04m")
+hframes = 15
+frame = 6
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-34, 43)
+shape = SubResource("CircleShape2D_ai5c1")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_j05jv")
+}
+
+[node name="DamageEmitter" parent="." index="4"]
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+position = Vector2(-35, 41)
+shape = SubResource("CircleShape2D_bawnb")
+
+[node name="DamageReceiver" parent="." index="5"]
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0"]
+position = Vector2(-39, 40)
+shape = SubResource("CircleShape2D_jy04m")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

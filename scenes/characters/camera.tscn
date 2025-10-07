@@ -1,0 +1,131 @@
+[gd_scene load_steps=12 format=3 uid="uid://bqckl2sfrlum7"]
+
+[ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bd2wf"]
+[ext_resource type="Script" uid="uid://b2yx8slnud6p2" path="res://scenes/characters/camera.gd" id="2_6oj1v"]
+[ext_resource type="Texture2D" uid="uid://b6bhosnps53dk" path="res://assets/Enemys/Camera_0-sheet.png" id="2_wpxx3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6oj1v"]
+radius = 144.00694
+
+[sub_resource type="Animation" id="Animation_3soqd"]
+resource_name = "Idle"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_p46fm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_vmeh7"]
+resource_name = "Walk"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 14]
+}
+
+[sub_resource type="Animation" id="Animation_wpxx3"]
+resource_name = "Attack"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1y72l"]
+_data = {
+&"Attack": SubResource("Animation_wpxx3"),
+&"Idle": SubResource("Animation_3soqd"),
+&"RESET": SubResource("Animation_p46fm"),
+&"Walk": SubResource("Animation_vmeh7")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q2qx7"]
+radius = 138.0
+height = 276.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kbtgw"]
+radius = 138.91724
+
+[node name="Camera" instance=ExtResource("1_bd2wf")]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("2_6oj1v")
+health = 50
+damage = 15
+speed = 250.0
+
+[node name="CharacterSprite" parent="." index="1"]
+visible = false
+texture = ExtResource("2_wpxx3")
+hframes = 15
+frame = 5
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(2, -30)
+shape = SubResource("CircleShape2D_6oj1v")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_1y72l")
+}
+autoplay = "Idle"
+
+[node name="DamageEmitter" parent="." index="4"]
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0"]
+position = Vector2(3, -29)
+shape = SubResource("CapsuleShape2D_q2qx7")
+
+[node name="DamageReceiver" parent="." index="5"]
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0"]
+position = Vector2(3, -30)
+shape = SubResource("CircleShape2D_kbtgw")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
