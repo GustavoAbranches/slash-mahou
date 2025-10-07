@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ha2o2uxxw5sv"]
 
-[ext_resource type="Script" uid="uid://v76uvm2jleh8" path="res://scripts/character.gd" id="1_x31xa"]
+[ext_resource type="Script" uid="uid://v76uvm2jleh8" path="res://scenes/characters/character.gd" id="1_x31xa"]
 [ext_resource type="Texture2D" uid="uid://dgfnppvqp3nr" path="res://assets/shadow.png" id="2_1bdar"]
 [ext_resource type="PackedScene" uid="uid://cp5kyj8405c47" path="res://colliders/damage_emitter.tscn" id="3_e22cc"]
 [ext_resource type="PackedScene" uid="uid://b2vk5738yrt1k" path="res://colliders/damage_receiver.tscn" id="4_2qjml"]
@@ -25,6 +25,9 @@ offset = Vector2(-7, 0)
 [node name="DamageEmitter" parent="." instance=ExtResource("3_e22cc")]
 
 [node name="DamageReceiver" parent="." instance=ExtResource("4_2qjml")]
+
+[node name="Knockback" type="Timer" parent="."]
+one_shot = true
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqckl2sfrlum7"]
+[gd_scene load_steps=13 format=3 uid="uid://bqckl2sfrlum7"]
 
 [ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bd2wf"]
 [ext_resource type="Script" uid="uid://b2yx8slnud6p2" path="res://scenes/characters/camera.gd" id="2_6oj1v"]
@@ -6,6 +6,23 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6oj1v"]
 radius = 144.00694
+
+[sub_resource type="Animation" id="Animation_wpxx3"]
+resource_name = "Attack"
+length = 0.45
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
 
 [sub_resource type="Animation" id="Animation_3soqd"]
 resource_name = "Idle"
@@ -39,6 +56,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [5]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_vmeh7"]
 resource_name = "Walk"
@@ -57,26 +86,27 @@ tracks/0/keys = {
 "values": [10, 11, 12, 14]
 }
 
-[sub_resource type="Animation" id="Animation_wpxx3"]
-resource_name = "Attack"
-length = 0.5
+[sub_resource type="Animation" id="Animation_6oj1v"]
+resource_name = "Death"
+length = 0.4
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/path = NodePath("CharacterSprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1y72l"]
 _data = {
 &"Attack": SubResource("Animation_wpxx3"),
+&"Death": SubResource("Animation_6oj1v"),
 &"Idle": SubResource("Animation_3soqd"),
 &"RESET": SubResource("Animation_p46fm"),
 &"Walk": SubResource("Animation_vmeh7")
@@ -90,6 +120,7 @@ height = 276.0
 radius = 138.91724
 
 [node name="Camera" instance=ExtResource("1_bd2wf")]
+position = Vector2(7, 1)
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_6oj1v")
@@ -97,14 +128,18 @@ health = 50
 damage = 15
 speed = 250.0
 
-[node name="CharacterSprite" parent="." index="1"]
+[node name="ShadowSprite" parent="." index="0"]
 visible = false
+
+[node name="CharacterSprite" parent="." index="1"]
+position = Vector2(-29, -128)
+scale = Vector2(0.8027027, 0.7595745)
 texture = ExtResource("2_wpxx3")
 hframes = 15
 frame = 5
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(2, -30)
+position = Vector2(-5, -155)
 shape = SubResource("CircleShape2D_6oj1v")
 
 [node name="AnimationPlayer" parent="." index="3"]
@@ -117,14 +152,14 @@ autoplay = "Idle"
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0"]
-position = Vector2(3, -29)
+position = Vector2(-2, -161)
 shape = SubResource("CapsuleShape2D_q2qx7")
 
 [node name="DamageReceiver" parent="." index="5"]
 collision_layer = 32
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
-position = Vector2(3, -30)
+position = Vector2(-2, -160)
 shape = SubResource("CircleShape2D_kbtgw")
 
 [editable path="DamageEmitter"]

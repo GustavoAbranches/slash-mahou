@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://j7pjay1dl00g"]
+[gd_scene load_steps=7 format=3 uid="uid://j7pjay1dl00g"]
 
 [ext_resource type="Script" uid="uid://sbbnjvcwvkj4" path="res://world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://cr1n41xvonqh2" path="res://scenes/stages/stage.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://d4i34lunweefv" path="res://scenes/characters/player.tscn" id="2_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://brlkbc378exmi" path="res://scenes/characters/slime.tscn" id="4_k0juu"]
-[ext_resource type="PackedScene" uid="uid://cr3i31aftkdio" path="res://scenes/characters/acao.tscn" id="5_71j4m"]
-[ext_resource type="PackedScene" uid="uid://bqckl2sfrlum7" path="res://scenes/characters/camera.tscn" id="6_qfnet"]
-[ext_resource type="PackedScene" uid="uid://clbt88t8qpsy2" path="res://scenes/characters/luz.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="5_71j4m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
 size = Vector2(62.75, 1079)
@@ -15,10 +13,14 @@ size = Vector2(62.75, 1079)
 script = ExtResource("1_4wyf3")
 
 [node name="Stage" parent="." instance=ExtResource("1_rwgxs")]
-position = Vector2(22, -4)
+position = Vector2(2, -4)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(963, 539)
+limit_left = 0
+limit_top = 0
+limit_right = 5060
+limit_bottom = 1100
 limit_smoothed = true
 
 [node name="InvisibleWalls" type="Node2D" parent="Camera"]
@@ -27,14 +29,14 @@ limit_smoothed = true
 position = Vector2(955, 39)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/LeftWall"]
-position = Vector2(-6, -30)
+position = Vector2(27, -30)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="RightWall" type="StaticBody2D" parent="Camera/InvisibleWalls"]
 position = Vector2(-916, 71)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall"]
-position = Vector2(-3, -62)
+position = Vector2(-62, -74)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="ActorConteiner" type="Node2D" parent="."]
@@ -44,22 +46,8 @@ position = Vector2(944, 775)
 speed = 700.0
 
 [node name="Slime" parent="ActorConteiner" node_paths=PackedStringArray("player") instance=ExtResource("4_k0juu")]
-visible = false
 position = Vector2(225, 650)
 player = NodePath("../Player")
 
-[node name="Acao" parent="ActorConteiner" node_paths=PackedStringArray("player") instance=ExtResource("5_71j4m")]
-visible = false
-position = Vector2(1659, 643)
-player = NodePath("../Player")
-
-[node name="Camera" parent="ActorConteiner" node_paths=PackedStringArray("player") instance=ExtResource("6_qfnet")]
-visible = false
-position = Vector2(670, 786)
-player = NodePath("../Player")
-speed = 300.0
-
-[node name="Luz" parent="ActorConteiner" node_paths=PackedStringArray("player") instance=ExtResource("7_i7141")]
-position = Vector2(335, 662)
-player = NodePath("../Player")
-speed = 400.0
+[node name="HealthPickup" parent="ActorConteiner" instance=ExtResource("5_71j4m")]
+position = Vector2(1479, 727)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cp3gpekdfc4u1"]
 
-[ext_resource type="Script" uid="uid://7u8iksl1awmf" path="res://main_menu.gd" id="1_06t4h"]
-[ext_resource type="Texture2D" uid="uid://bqinr5oo0ufe6" path="res://Verdigris Magislahs Banner 4k.png" id="2_7vrkn"]
+[ext_resource type="Script" uid="uid://7u8iksl1awmf" path="res://scenes/ui/main_menu.gd" id="1_fe2o3"]
+[ext_resource type="Texture2D" uid="uid://bqinr5oo0ufe6" path="res://Verdigris Magislahs Banner 4k.png" id="2_1g8jr"]
 
 [node name="Main Menu" type="Node2D"]
-script = ExtResource("1_06t4h")
+script = ExtResource("1_fe2o3")
 
 [node name="Button_Manger" type="Control" parent="."]
 layout_mode = 3
@@ -15,7 +15,7 @@ offset_bottom = 40.0
 [node name="VerdigrisMagislahsBanner4k" type="Sprite2D" parent="Button_Manger"]
 position = Vector2(965, 545)
 scale = Vector2(0.5005219, 0.49999997)
-texture = ExtResource("2_7vrkn")
+texture = ExtResource("2_1g8jr")
 
 [node name="Iniciar" type="Button" parent="Button_Manger"]
 layout_mode = 0

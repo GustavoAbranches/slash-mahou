@@ -1,21 +1,24 @@
-#OS COMENTARIOS SO SERÃO RETIRADOS QUANDO AS ANIMAÇOES ESTIVEREM PRONTAS
 class_name Character
 extends CharacterBody2D
 
 @export var health : int
 @export var damage : int
 @export var speed : float 
+@export var knockback_force: float = 250.0
 
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite 
 @onready var damage_emitter := $DamageEmitter
+@onready var knockback_timer := $Knockback
 
-enum State {IDLE, WALK, ATTACK}
+signal health_changed(new_health)
+
+enum State {IDLE, WALK, ATTACK, HIT, DEATH}
 
 var state = State.IDLE
-const GAME_OVER_SCREEN = preload("res://scenes/ui/game_over_screen.tscn")
 
 func _ready() -> void:
+	knockback_timer.timeout.connect(on_knockback_finished)
 	print(name, " está tentando conectar o sinal do DamageEmitter.")
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
 	print(name, " conectou emitter -> on_emit_damage")
@@ -29,6 +32,8 @@ func _physics_process(_delta: float) -> void:
 	
 #CONTROLA A ANIMAÇÃO DE MOVIMENTO
 func  handle_movement() -> void:
+	if state == State.HIT:
+		return
 	if can_move():	
 		if velocity.length() == 0:
 			state= State.IDLE
@@ -72,25 +77,34 @@ func on_emit_damage(damage_receiver: DamageReceiver) -> void:
 	print(name, " tentou causar dano em ", damage_receiver.name)
 	if damage_receiver.get_parent() is Character:
 		var target_character: Character = damage_receiver.get_parent()
-		target_character.take_damage(damage)
+		var attack_source_position = self.global_position
+		target_character.take_damage(damage, attack_source_position)
 		print("Dano aplicado em ", target_character.name, " nova vida: ", target_character.health)
 
-func take_damage(amount: int) -> void:
+func take_damage(damage: int, attack_source_position: Vector2) -> void:
 	if health <= 0:
 		return
 		
-	health -= amount
-	print(name, " recebeu ", amount, " de dano. Vida restante: ", health)
+	health -= damage
+	health_changed.emit(health)
+	print(name, " recebeu ", damage, " de dano. Vida restante: ", health)
 	
 	if health <= 0:
 		die()
+	else:
+		state = State.HIT
+		var knockback_direction = (global_position - attack_source_position).normalized()
+		velocity = knockback_direction * knockback_force
+		knockback_timer.start(0.2) #
 		
-func die() -> void:	
-	velocity = Vector2.ZERO
-	set_process(false)
-	
-	if self is Player:
-		var game_over_screen = GAME_OVER_SCREEN.instantiate()
-		get_tree().root.add_child(game_over_screen)
-	
+func on_knockback_finished() -> void:
+	if state == State.HIT:
+		velocity = Vector2.ZERO
+		state = State.IDLE
+		
+func die() -> void:
+	state = State.DEATH
+	set_physics_process(false)
+	animation_player.play("Death")
+	await animation_player.animation_finished
 	queue_free()

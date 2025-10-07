@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4rx3x7looikf"]
+
+[ext_resource type="Script" uid="uid://c7ev5iyxm7qrc" path="res://scenes/ui/pause_screen.gd" id="1_milqs"]
+
+[node name="PauseScreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_milqs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Resume" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+text = "CONTINUAR
+"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+text = "SAIR"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.499
+anchor_top = 0.142
+anchor_right = 0.499
+anchor_bottom = 0.142
+offset_left = -124.08002
+offset_top = -30.36
+offset_right = 125.91998
+offset_bottom = 29.64
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "PAUSADO"
+uppercase = true
+
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

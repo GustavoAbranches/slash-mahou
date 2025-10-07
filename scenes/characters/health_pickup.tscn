@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfd8lonokw6q4"]
+
+[ext_resource type="PackedScene" uid="uid://c4a4resfdb4m1" path="res://scenes/characters/pickup.tscn" id="1_n0vtm"]
+[ext_resource type="Script" uid="uid://bft4s4d8nljgg" path="res://scenes/characters/health_pickup.gd" id="2_2i4xj"]
+[ext_resource type="Texture2D" uid="uid://bi4t52fgvg1o4" path="res://assets/Pickups/apple.png" id="2_gubtp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0vtm"]
+size = Vector2(79, 71)
+
+[node name="HealthPickup" instance=ExtResource("1_n0vtm")]
+script = ExtResource("2_2i4xj")
+heal_amount = 10
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(-3, 7.6293945e-06)
+scale = Vector2(0.16894531, 0.1464844)
+texture = ExtResource("2_gubtp")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1.5, 0.5)
+shape = SubResource("RectangleShape2D_n0vtm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

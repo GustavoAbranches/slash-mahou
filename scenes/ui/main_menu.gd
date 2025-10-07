@@ -6,7 +6,7 @@ func _on_iniciar_pressed() -> void:
 
 
 func _on_opções_pressed() -> void:
-	get_tree().change_scene_to_file("res://settings.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/settings.gd")
 
 
 func _on_sair_pressed() -> void:
