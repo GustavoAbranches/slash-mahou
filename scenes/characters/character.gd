@@ -5,22 +5,28 @@ extends CharacterBody2D
 @export var damage : int
 @export var speed : float 
 @export var knockback_force: float = 250.0
+@export var health_pickup_scene: PackedScene
+@export var drop_chance: float = 0.25
+@export var points: int = 10
 
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite 
 @onready var damage_emitter := $DamageEmitter
 @onready var knockback_timer := $Knockback
+@onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 
 signal health_changed(new_health)
 
 enum State {IDLE, WALK, ATTACK, HIT, DEATH}
 
 var state = State.IDLE
+var is_invulnerable := false
 
 func _ready() -> void:
 	knockback_timer.timeout.connect(on_knockback_finished)
 	print(name, " está tentando conectar o sinal do DamageEmitter.")
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
+	invulnerability_timer.timeout.connect(_on_invulnerability_timer_timeout)
 	print(name, " conectou emitter -> on_emit_damage")
 
 func _physics_process(_delta: float) -> void:
@@ -29,6 +35,11 @@ func _physics_process(_delta: float) -> void:
 	handle_animations()
 	flip_sprites()
 	move_and_slide()
+	
+	if is_in_group("player") and is_invulnerable:
+		character_sprite.visible = fmod(Time.get_ticks_msec(), 200) > 100
+	else:
+		character_sprite.visible = true
 	
 #CONTROLA A ANIMAÇÃO DE MOVIMENTO
 func  handle_movement() -> void:
@@ -82,6 +93,8 @@ func on_emit_damage(damage_receiver: DamageReceiver) -> void:
 		print("Dano aplicado em ", target_character.name, " nova vida: ", target_character.health)
 
 func take_damage(damage: int, attack_source_position: Vector2) -> void:
+	if is_invulnerable:
+		return
 	if health <= 0:
 		return
 		
@@ -92,6 +105,11 @@ func take_damage(damage: int, attack_source_position: Vector2) -> void:
 	if health <= 0:
 		die()
 	else:
+		
+		if is_in_group("player"):
+			is_invulnerable = true
+			invulnerability_timer.start()
+		
 		state = State.HIT
 		var knockback_direction = (global_position - attack_source_position).normalized()
 		velocity = knockback_direction * knockback_force
@@ -102,9 +120,23 @@ func on_knockback_finished() -> void:
 		velocity = Vector2.ZERO
 		state = State.IDLE
 		
+func _on_invulnerability_timer_timeout() -> void:
+	is_invulnerable = false
+	character_sprite.visible = true
+	
 func die() -> void:
 	state = State.DEATH
 	set_physics_process(false)
 	animation_player.play("Death")
 	await animation_player.animation_finished
+	
+#LÓGICA DE DROP
+	if randf() < drop_chance:
+		if health_pickup_scene:
+			var pickup = health_pickup_scene.instantiate()
+			get_parent().add_child(pickup)
+			pickup.global_position = global_position
+#PONTUAÇÃO
+	GameManager.add_score(points)
+	
 	queue_free()

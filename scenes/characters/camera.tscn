@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqckl2sfrlum7"]
+[gd_scene load_steps=14 format=3 uid="uid://bqckl2sfrlum7"]
 
 [ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bd2wf"]
 [ext_resource type="Script" uid="uid://b2yx8slnud6p2" path="res://scenes/characters/camera.gd" id="2_6oj1v"]
 [ext_resource type="Texture2D" uid="uid://b6bhosnps53dk" path="res://assets/Enemys/Camera_0-sheet.png" id="2_wpxx3"]
+[ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="3_6oj1v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6oj1v"]
 radius = 144.00694
@@ -22,6 +23,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_6oj1v"]
+resource_name = "Death"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_3soqd"]
@@ -86,23 +104,6 @@ tracks/0/keys = {
 "values": [10, 11, 12, 14]
 }
 
-[sub_resource type="Animation" id="Animation_6oj1v"]
-resource_name = "Death"
-length = 0.4
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterSprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1y72l"]
 _data = {
 &"Attack": SubResource("Animation_wpxx3"),
@@ -124,9 +125,11 @@ position = Vector2(7, 1)
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_6oj1v")
-health = 50
+health = 20
 damage = 15
 speed = 250.0
+knockback_force = 1000.0
+health_pickup_scene = ExtResource("3_6oj1v")
 
 [node name="ShadowSprite" parent="." index="0"]
 visible = false

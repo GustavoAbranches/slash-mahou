@@ -1,10 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr1n41xvonqh2"]
+[gd_scene load_steps=4 format=3 uid="uid://cr1n41xvonqh2"]
 
-[ext_resource type="Texture2D" uid="uid://brdife65awtaj" path="res://assets/backgrounds/background_1.png" id="1_iinn4"]
-[ext_resource type="Texture2D" uid="uid://byg0fp5kuyqaa" path="res://icon.svg" id="2_tpwft"]
+[ext_resource type="Texture2D" uid="uid://5w8jhyq7sbbs" path="res://assets/backgrounds/Cénario png.png" id="1_tpwft"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iinn4"]
-size = Vector2(5068.5, 85.5)
+size = Vector2(1919.625, 85.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpwft"]
 size = Vector2(78, 1182)
@@ -15,9 +14,9 @@ metadata/_edit_horizontal_guides_ = [414.0]
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
-position = Vector2(2530.5, 541)
-scale = Vector2(4.2175, 1.8033335)
-texture = ExtResource("1_iinn4")
+position = Vector2(959, 540.12494)
+scale = Vector2(0.49973956, 0.49918973)
+texture = ExtResource("1_tpwft")
 
 [node name="WordCollider" type="Node2D" parent="."]
 
@@ -25,7 +24,7 @@ texture = ExtResource("1_iinn4")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WordCollider/StaticBody2D"]
-position = Vector2(2534, 550)
+position = Vector2(955.375, 550)
 shape = SubResource("RectangleShape2D_iinn4")
 
 [node name="WordCollider2" type="Node2D" parent="."]
@@ -34,20 +33,8 @@ shape = SubResource("RectangleShape2D_iinn4")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WordCollider2/StaticBody2D"]
-position = Vector2(2518, 1097)
+position = Vector2(957.1875, 1083)
 shape = SubResource("RectangleShape2D_iinn4")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2325, 160)
-texture = ExtResource("2_tpwft")
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(4827, 154)
-texture = ExtResource("2_tpwft")
-
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(545, 177)
-texture = ExtResource("2_tpwft")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -55,5 +42,14 @@ texture = ExtResource("2_tpwft")
 position = Vector2(-51, 58)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/StaticBody2D"]
-position = Vector2(5149, 498)
+position = Vector2(2009, 474)
+shape = SubResource("RectangleShape2D_tpwft")
+
+[node name="Node2D2" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D2"]
+position = Vector2(-51, 58)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D2/StaticBody2D"]
+position = Vector2(10, 485)
 shape = SubResource("RectangleShape2D_tpwft")

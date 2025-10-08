@@ -4,40 +4,22 @@
 [ext_resource type="PackedScene" uid="uid://cr1n41xvonqh2" path="res://scenes/stages/stage.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://d4i34lunweefv" path="res://scenes/characters/player.tscn" id="2_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://brlkbc378exmi" path="res://scenes/characters/slime.tscn" id="4_k0juu"]
-[ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="5_71j4m"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(62.75, 1079)
+[ext_resource type="Script" uid="uid://djuxiumb33n6i" path="res://scenes/enemy_spawner.gd" id="9_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://cdsb5g5pljr6r" path="res://scenes/ui/game_ui.tscn" id="9_w7kh3"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_4wyf3")
 
 [node name="Stage" parent="." instance=ExtResource("1_rwgxs")]
-position = Vector2(2, -4)
+position = Vector2(-5, -6)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(963, 539)
-limit_left = 0
+limit_left = 10
 limit_top = 0
-limit_right = 5060
-limit_bottom = 1100
+limit_right = 1900
+limit_bottom = 1070
 limit_smoothed = true
-
-[node name="InvisibleWalls" type="Node2D" parent="Camera"]
-
-[node name="LeftWall" type="StaticBody2D" parent="Camera/InvisibleWalls"]
-position = Vector2(955, 39)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/LeftWall"]
-position = Vector2(27, -30)
-shape = SubResource("RectangleShape2D_rwgxs")
-
-[node name="RightWall" type="StaticBody2D" parent="Camera/InvisibleWalls"]
-position = Vector2(-916, 71)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall"]
-position = Vector2(-62, -74)
-shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="ActorConteiner" type="Node2D" parent="."]
 
@@ -45,9 +27,35 @@ shape = SubResource("RectangleShape2D_rwgxs")
 position = Vector2(944, 775)
 speed = 700.0
 
-[node name="Slime" parent="ActorConteiner" node_paths=PackedStringArray("player") instance=ExtResource("4_k0juu")]
-position = Vector2(225, 650)
-player = NodePath("../Player")
+[node name="SpawnPoints" type="Node2D" parent="."]
 
-[node name="HealthPickup" parent="ActorConteiner" instance=ExtResource("5_71j4m")]
-position = Vector2(1479, 727)
+[node name="Marker2D" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1844, 958)
+
+[node name="Marker2D2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(1847, 688)
+
+[node name="Marker2D3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(57, 665)
+
+[node name="Marker2D4" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(65, 972)
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("spawn_points_container", "target_container")]
+script = ExtResource("9_7r4gi")
+enemy_scenes = Array[PackedScene]([ExtResource("4_k0juu")])
+spawn_points_container = NodePath("../SpawnPoints")
+target_container = NodePath("../ActorConteiner")
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
+wait_time = 3.0
+autostart = true
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 120.0
+one_shot = true
+
+[node name="GameUI" parent="." instance=ExtResource("9_w7kh3")]
+
+[connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="_on_timer_timeout"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
