@@ -2,6 +2,9 @@ extends Node
 
 const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS 
+
 func _unhandled_input(event):
 	if event.is_action_pressed("pause"):
 		if get_tree().paused:

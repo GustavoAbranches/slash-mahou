@@ -35,6 +35,7 @@ offset_left = -199.5
 offset_right = 199.5
 offset_bottom = 253.5
 grow_horizontal = 2
+theme = ExtResource("2_sopbp")
 theme_override_font_sizes/font_size = 45
 text = "GAME OVER"
 horizontal_alignment = 1
@@ -48,28 +49,31 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -415.0
-offset_top = -207.0
-offset_right = 416.0
-offset_bottom = 169.0
+offset_left = -415.5
+offset_top = -188.0
+offset_right = 415.5
+offset_bottom = 188.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FinalScoreLabel" type="Label" parent="Root/VBoxContainer"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
+theme = ExtResource("2_sopbp")
 theme_override_font_sizes/font_size = 40
 text = "Pontuação Final: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Restart" type="Button" parent="Root/VBoxContainer"]
+custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 40
 text = "RESTART"
 
 [node name="Main Menu" type="Button" parent="Root/VBoxContainer"]
+custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

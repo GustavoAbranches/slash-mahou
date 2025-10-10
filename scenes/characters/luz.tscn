@@ -210,6 +210,7 @@ position = Vector2(59, 73)
 shape = SubResource("RectangleShape2D_hpfks")
 
 [node name="CooldownTimer" type="Timer" parent="." index="8"]
+one_shot = true
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
