@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgfnppvqp3nr"
-path="res://.godot/imported/shadow.png-fa649b8bf20b5924dee4fa3287dfd1b8.ctex"
+uid="uid://cjjlw7paapwot"
+path="res://.godot/imported/4HP_meter_V2.png-22a2e7c9eff754b09056342c232938ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/shadow.png"
-dest_files=["res://.godot/imported/shadow.png-fa649b8bf20b5924dee4fa3287dfd1b8.ctex"]
+source_file="res://assets/UI/4HP_meter_V2.png"
+dest_files=["res://.godot/imported/4HP_meter_V2.png-22a2e7c9eff754b09056342c232938ca.ctex"]
 
 [params]
 

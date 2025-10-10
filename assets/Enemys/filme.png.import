@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgfnppvqp3nr"
-path="res://.godot/imported/shadow.png-fa649b8bf20b5924dee4fa3287dfd1b8.ctex"
+uid="uid://cy8edehs60tag"
+path="res://.godot/imported/filme.png-f6989c482a8c7b60b9decd335db9a084.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/shadow.png"
-dest_files=["res://.godot/imported/shadow.png-fa649b8bf20b5924dee4fa3287dfd1b8.ctex"]
+source_file="res://assets/Enemys/filme.png"
+dest_files=["res://.godot/imported/filme.png-f6989c482a8c7b60b9decd335db9a084.ctex"]
 
 [params]
 

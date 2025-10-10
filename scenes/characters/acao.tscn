@@ -3,11 +3,53 @@
 [ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bsunn"]
 [ext_resource type="Texture2D" uid="uid://7pj14gyaoqhg" path="res://assets/Enemys/Acao_0-sheet.png" id="2_fegrd"]
 [ext_resource type="Script" uid="uid://dr5ahii227gka" path="res://scenes/characters/acao.gd" id="2_jmi3k"]
-[ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="3_jmi3k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsunn"]
-radius = 109.51256
-height = 219.02512
+radius = 88.00116
+height = 176.00232
+
+[sub_resource type="Animation" id="Animation_1wr6p"]
+resource_name = "Attack"
+length = 0.6
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8, 9, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.20427586, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5833333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_fegrd"]
 resource_name = "Death"
@@ -70,6 +112,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_0nvw3"]
 resource_name = "Walk"
@@ -90,6 +144,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1wr6p"]
 _data = {
+&"Attack": SubResource("Animation_1wr6p"),
 &"Death": SubResource("Animation_fegrd"),
 &"Idle": SubResource("Animation_jmi3k"),
 &"RESET": SubResource("Animation_6oafe"),
@@ -101,30 +156,33 @@ radius = 50.33406
 height = 694.0961
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jmi3k"]
-radius = 40.330887
-height = 114.95247
+radius = 33.825905
+height = 102.97826
 
 [node name="Acao" instance=ExtResource("1_bsunn")]
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_jmi3k")
+change_dir_time = 3.0
+damage_cooldown = 1.0
 health = 30
 damage = 10
 speed = 250.0
 knockback_force = 1000.0
-health_pickup_scene = ExtResource("3_jmi3k")
+drop_chance = 0.25
+points = 10
 
 [node name="ShadowSprite" parent="." index="0"]
 visible = false
 
 [node name="CharacterSprite" parent="." index="1"]
-position = Vector2(1, -143.00002)
-scale = Vector2(0.77494454, 0.7087629)
+position = Vector2(7.999996, -122)
+scale = Vector2(0.64911306, 0.5811855)
 texture = ExtResource("2_fegrd")
 hframes = 12
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(-14, -52.000008)
+position = Vector2(-14, -40)
 scale = Vector2(1, 0.5113569)
 shape = SubResource("CapsuleShape2D_bsunn")
 
@@ -136,11 +194,13 @@ autoplay = "Idle"
 
 [node name="DamageEmitter" parent="." index="4"]
 collision_mask = 16
+monitoring = true
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0"]
 position = Vector2(137, -144.99998)
 scale = Vector2(1.430443, 0.33424762)
 shape = SubResource("CapsuleShape2D_fegrd")
+disabled = true
 
 [node name="DamageReceiver" parent="." index="5"]
 collision_layer = 32
@@ -149,6 +209,10 @@ collision_layer = 32
 position = Vector2(-9.000004, -50)
 scale = Vector2(3.0745666, -0.8351278)
 shape = SubResource("CapsuleShape2D_jmi3k")
+
+[node name="TurnTimer" type="Timer" parent="." index="8"]
+
+[node name="DamageCooldownTimer" type="Timer" parent="." index="9"]
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

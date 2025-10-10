@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqckl2sfrlum7"]
+[gd_scene load_steps=15 format=3 uid="uid://bqckl2sfrlum7"]
 
 [ext_resource type="PackedScene" uid="uid://ha2o2uxxw5sv" path="res://scenes/characters/character.tscn" id="1_bd2wf"]
 [ext_resource type="Script" uid="uid://b2yx8slnud6p2" path="res://scenes/characters/camera.gd" id="2_6oj1v"]
 [ext_resource type="Texture2D" uid="uid://b6bhosnps53dk" path="res://assets/Enemys/Camera_0-sheet.png" id="2_wpxx3"]
+[ext_resource type="PackedScene" uid="uid://c1n7jsplkjuk2" path="res://scenes/projectile/filme.tscn" id="3_3soqd"]
 [ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="3_6oj1v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6oj1v"]
-radius = 144.00694
+radius = 97.00516
 
 [sub_resource type="Animation" id="Animation_wpxx3"]
 resource_name = "Attack"
@@ -23,6 +24,35 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.10157071, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_fire_projectile"
+}, {
+"args": [],
+"method": &"on_action_complete"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_6oj1v"]
@@ -86,6 +116,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_vmeh7"]
 resource_name = "Walk"
@@ -114,35 +156,39 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q2qx7"]
-radius = 138.0
-height = 276.0
+radius = 93.0
+height = 186.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kbtgw"]
-radius = 138.91724
+radius = 95.0
 
 [node name="Camera" instance=ExtResource("1_bd2wf")]
-position = Vector2(7, 1)
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_6oj1v")
+shoot_interval = 2.0
+flight_height = 100.0
+filme_scene = ExtResource("3_3soqd")
 health = 20
 damage = 15
 speed = 250.0
 knockback_force = 1000.0
 health_pickup_scene = ExtResource("3_6oj1v")
+drop_chance = 0.25
+points = 10
 
 [node name="ShadowSprite" parent="." index="0"]
 visible = false
 
 [node name="CharacterSprite" parent="." index="1"]
-position = Vector2(-29, -128)
-scale = Vector2(0.8027027, 0.7595745)
+position = Vector2(1, -114.99999)
+scale = Vector2(0.59324324, 0.49468085)
 texture = ExtResource("2_wpxx3")
 hframes = 15
 frame = 5
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(-5, -155)
+position = Vector2(7, -114)
 shape = SubResource("CircleShape2D_6oj1v")
 
 [node name="AnimationPlayer" parent="." index="3"]
@@ -153,17 +199,21 @@ autoplay = "Idle"
 
 [node name="DamageEmitter" parent="." index="4"]
 collision_mask = 16
+monitoring = true
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0"]
-position = Vector2(-2, -161)
+position = Vector2(2, -115)
 shape = SubResource("CapsuleShape2D_q2qx7")
+disabled = true
 
 [node name="DamageReceiver" parent="." index="5"]
 collision_layer = 32
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
-position = Vector2(-2, -160)
+position = Vector2(4, -109)
 shape = SubResource("CircleShape2D_kbtgw")
+
+[node name="ShootTimer" type="Timer" parent="." index="8"]
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

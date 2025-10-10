@@ -85,6 +85,7 @@ func on_action_complete() -> void:
 	state = State.IDLE
 	
 func on_emit_damage(damage_receiver: DamageReceiver) -> void:
+	print("!!! COLISÃO DE ATAQUE DETECTADA !!!")
 	print(name, " tentou causar dano em ", damage_receiver.name)
 	if damage_receiver.get_parent() is Character:
 		var target_character: Character = damage_receiver.get_parent()
@@ -105,7 +106,6 @@ func take_damage(damage: int, attack_source_position: Vector2) -> void:
 	if health <= 0:
 		die()
 	else:
-		
 		if is_in_group("player"):
 			is_invulnerable = true
 			invulnerability_timer.start()

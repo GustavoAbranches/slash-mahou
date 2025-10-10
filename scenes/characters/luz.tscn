@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cfd8lonokw6q4" path="res://scenes/characters/health_pickup.tscn" id="3_bawnb"]
 [ext_resource type="Texture2D" uid="uid://c6frs0atomrrd" path="res://assets/Enemys/Luz_0-sheet.png" id="3_jy04m"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ai5c1"]
-radius = 103.31021
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bawnb"]
+size = Vector2(303, 44)
 
 [sub_resource type="Animation" id="Animation_ai5c1"]
 resource_name = "Attack"
@@ -23,6 +23,32 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [11, 12, 13]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_bawnb"]
@@ -86,6 +112,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_akh08"]
 resource_name = "Walk"
@@ -113,34 +151,42 @@ _data = {
 &"Walk": SubResource("Animation_akh08")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bawnb"]
-radius = 97.867256
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jy04m"]
+size = Vector2(226.375, 82)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jy04m"]
-radius = 98.32599
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpfks"]
+size = Vector2(312, 66)
 
 [node name="Luz" instance=ExtResource("1_ai5c1")]
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_bawnb")
+attack_range = 150.0
+attack_cooldown = 2.0
 health = 50
 damage = 5
 speed = 300.0
 knockback_force = 1000.0
 health_pickup_scene = ExtResource("3_bawnb")
+drop_chance = 0.25
+points = 10
+
+[node name="ShadowSprite" parent="." index="0"]
+visible = false
 
 [node name="CharacterSprite" parent="." index="1"]
-position = Vector2(-8, -121)
-scale = Vector2(0.81009614, 0.7795031)
+position = Vector2(4, -98.99999)
+scale = Vector2(0.7007211, 0.6413043)
 texture = ExtResource("3_jy04m")
 hframes = 15
 frame = 6
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(-53, -94)
-shape = SubResource("CircleShape2D_ai5c1")
+position = Vector2(7, -18)
+shape = SubResource("RectangleShape2D_bawnb")
 
 [node name="AnimationPlayer" parent="." index="3"]
+callback_mode_process = 0
 libraries = {
 &"": SubResource("AnimationLibrary_j05jv")
 }
@@ -148,18 +194,22 @@ libraries = {
 [node name="DamageEmitter" parent="." index="4"]
 position = Vector2(-56, -101)
 collision_mask = 16
+monitoring = true
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0"]
-position = Vector2(8, 3)
-shape = SubResource("CircleShape2D_bawnb")
+position = Vector2(132, -37)
+shape = SubResource("RectangleShape2D_jy04m")
+disabled = true
 
 [node name="DamageReceiver" parent="." index="5"]
 position = Vector2(-58, -103)
 collision_layer = 32
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
-position = Vector2(0, 6)
-shape = SubResource("CircleShape2D_jy04m")
+position = Vector2(59, 73)
+shape = SubResource("RectangleShape2D_hpfks")
+
+[node name="CooldownTimer" type="Timer" parent="." index="8"]
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

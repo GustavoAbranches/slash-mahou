@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://j7pjay1dl00g"]
+[gd_scene load_steps=9 format=3 uid="uid://j7pjay1dl00g"]
 
 [ext_resource type="Script" uid="uid://sbbnjvcwvkj4" path="res://world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://cr1n41xvonqh2" path="res://scenes/stages/stage.tscn" id="1_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://d4i34lunweefv" path="res://scenes/characters/player.tscn" id="2_4wyf3"]
-[ext_resource type="PackedScene" uid="uid://brlkbc378exmi" path="res://scenes/characters/slime.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://clbt88t8qpsy2" path="res://scenes/characters/luz.tscn" id="5_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://bqckl2sfrlum7" path="res://scenes/characters/camera.tscn" id="5_qfnet"]
+[ext_resource type="PackedScene" uid="uid://cr3i31aftkdio" path="res://scenes/characters/acao.tscn" id="7_7r4gi"]
 [ext_resource type="Script" uid="uid://djuxiumb33n6i" path="res://scenes/enemy_spawner.gd" id="9_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://cdsb5g5pljr6r" path="res://scenes/ui/game_ui.tscn" id="9_w7kh3"]
 
@@ -22,6 +24,7 @@ limit_bottom = 1070
 limit_smoothed = true
 
 [node name="ActorConteiner" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Player" parent="ActorConteiner" instance=ExtResource("2_4wyf3")]
 position = Vector2(944, 775)
@@ -43,7 +46,7 @@ position = Vector2(65, 972)
 
 [node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("spawn_points_container", "target_container")]
 script = ExtResource("9_7r4gi")
-enemy_scenes = Array[PackedScene]([ExtResource("4_k0juu")])
+enemy_scenes = Array[PackedScene]([ExtResource("5_4mrxx"), ExtResource("5_qfnet"), ExtResource("7_7r4gi")])
 spawn_points_container = NodePath("../SpawnPoints")
 target_container = NodePath("../ActorConteiner")
 

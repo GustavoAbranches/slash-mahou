@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://bb5jnfy2hsmi4" path="res://assets/Player/vevs_sheet.png" id="3_76oj4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyp2m"]
-radius = 25.624525
-height = 142.06802
+radius = 20.626427
+height = 287.88596
 
 [sub_resource type="Animation" id="Animation_76oj4"]
 resource_name = "Attack"
@@ -127,8 +127,8 @@ radius = 43.0
 height = 515.8278
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
-radius = 68.86052
-height = 137.72104
+radius = 84.40967
+height = 168.81934
 
 [node name="Player" groups=["player"] instance=ExtResource("1_rp718")]
 collision_layer = 3
@@ -137,16 +137,17 @@ script = ExtResource("2_76oj4")
 health = 100
 damage = 10
 speed = 350.0
+knockback_force = 250.0
 drop_chance = 0.0
 points = 0
 
 [node name="ShadowSprite" parent="." index="0"]
 visible = false
-position = Vector2(-101, 439)
-scale = Vector2(8.61004, -8.60577)
+position = Vector2(-179, 131)
+scale = Vector2(0.4971895, -1.0407478)
 
 [node name="CharacterSprite" parent="." index="1"]
-position = Vector2(264.99997, -411.99994)
+position = Vector2(276.00003, -432.00003)
 scale = Vector2(-0.420014, 0.46034)
 texture = ExtResource("3_76oj4")
 centered = false
@@ -156,7 +157,7 @@ vframes = 3
 region_rect = Rect2(0, 0, 9234, 1027)
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(46, -4)
+position = Vector2(1, -22)
 scale = Vector2(-3.8785193, -0.19452146)
 shape = SubResource("CapsuleShape2D_dyp2m")
 
@@ -180,19 +181,9 @@ disabled = true
 collision_layer = 16
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0"]
-position = Vector2(21, -14)
+position = Vector2(4, -24)
 scale = Vector2(0.9003708, 0.46874005)
 shape = SubResource("CapsuleShape2D_atpat")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
-
-[node name="HeathBar" type="ProgressBar" parent="CanvasLayer" index="0"]
-offset_left = 75.0
-offset_top = 45.0
-offset_right = 728.0
-offset_bottom = 126.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]

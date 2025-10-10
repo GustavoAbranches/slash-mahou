@@ -2,18 +2,13 @@ class_name Player
 
 extends Character
 
-@onready var health_bar: ProgressBar = $CanvasLayer/HeathBar
-
 var max_health: int
 
 const GAME_OVER_SCREEN = preload("res://scenes/ui/game_over_screen.tscn")
 
 func _ready() -> void:
 	super()
-	max_health = health
-	health_bar.max_value = max_health
-	health_bar.value = health
-	
+	max_health = health	
 	health_changed.connect(_on_health_changed)
 
 func handle_input() -> void: 
@@ -24,8 +19,8 @@ func handle_input() -> void:
 	if can_attack() and Input.is_action_just_pressed("attack"):
 		state = State.ATTACK
 
-func _on_health_changed(new_health: int) -> void:
-	health_bar.value = new_health
+func _on_health_changed(_new_health: int) -> void:
+	pass
 
 func recover_health(amount: int) -> void:
 	health += amount

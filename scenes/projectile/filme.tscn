@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1n7jsplkjuk2"]
+
+[ext_resource type="Script" uid="uid://di02vqhm30djt" path="res://scenes/projectile/filme.gd" id="1_63ek1"]
+[ext_resource type="Texture2D" uid="uid://cy8edehs60tag" path="res://assets/Enemys/filme.png" id="1_v1ubh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tf0b"]
+size = Vector2(73, 78)
+
+[node name="Filme" type="RigidBody2D"]
+script = ExtResource("1_63ek1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v1ubh")
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_2tf0b")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
